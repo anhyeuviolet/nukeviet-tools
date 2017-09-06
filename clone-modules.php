@@ -62,9 +62,16 @@ try {
 				trigger_error($e->getMessage());
 			}
 			
-			// Copy data tu module goc
+			// Copy cau truc tu module goc
 			try{
-				$query = $db->query("CREATE TABLE " . $target_table . " AS SELECT * FROM " . $table[0]);
+				$query = $db->query("CREATE TABLE " . $target_table . " LIKE " . $table[0]);
+			} catch (PDOException $e) {
+				trigger_error($e->getMessage());
+			}
+            
+			// Copy du lieu tu module goc
+			try{
+				$query = $db->query("INSERT INTO " . $target_table . " SELECT * FROM " . $table[0]);
 			} catch (PDOException $e) {
 				trigger_error($e->getMessage());
 			}
